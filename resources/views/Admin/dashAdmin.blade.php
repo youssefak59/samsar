@@ -79,10 +79,10 @@
             </router-link>
           </li>
           <li class="nav-item ">
-            <a class="nav-link" href="./icons.html">
-              <i class="material-icons">bubble_chart</i>
-              <p>Icons</p>
-            </a>
+            <router-link tag="a"  class="nav-link"    to="/fr/cms/profile" >
+                 <i class="material-icons">person_outline</i>
+                 <p>Edit profile</p>
+            </router-link>
           </li>
           <li class="nav-item ">
             <a class="nav-link" href="./map.html">
@@ -117,8 +117,10 @@
       <!-- End Navbar -->
       <div class="content">
         
-            
-            <router-view></router-view>
+            <vue-page-transition>
+              <router-view></router-view>
+            </vue-page-transition>
+           
   
        <script src=" {{ asset('js/app.js') }}"></script>
       </div>

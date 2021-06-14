@@ -8,6 +8,8 @@ use App\Models\Region;
 use App\Models\Ville;
 use App\Models\Image;
 use App\Models\Message;
+use App\Models\User;
+
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 
@@ -337,12 +339,38 @@ class AnnonceController extends Controller
                                 return response()->json(["status"=>"succsus"]);
                              }
                              else return response()->json(["status"=>"error"]);
-                            
+     }
+     public function AddAdmin(Request $request){
+        $request->validate([
+                'name' =>'required',
+                'email'     =>'required|email',
+                'password'       =>'required',
+                'fonction'      =>'required',
+                
+            ]);
+        
+        $user=new User();
+        $user->name=$request->name;
+        $user->email=$request->email;
+        $user->password=\Hash::make($request->password);
+        $user->fonctiontype=$request->fonction; 
+        if($user->save())  return response()->json(["stats"=>"succsus"]);
+            return response()->json(["status"=>"error"]);
+        
+     }
+     public function GetAdmins(){
+         
+         $users=DB::table("users")
+                    ->orderBy('created_at', 'DESC')
+                    ->paginate(8);
+         return response()->json(["status"=>"succsus","admins"=>$users]);
+     }
+     public function DeleteAdmin($id){
+      
+         if(Db::table("users")->where('id',$id)->delete())return response()->json(["status"=>"success"]);
+         return response()->json(["status"=>"error"]);
 
-
-
-                                 
-    }
+     }
 
 
 

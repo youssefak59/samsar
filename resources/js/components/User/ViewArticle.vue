@@ -46,7 +46,7 @@
         </div>
         <div class="row">
           <div class="col-lg-8">
-            <div class="card">
+            <div class="card mb-0">
               <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
                 <ol class="carousel-indicators">
                   <li
@@ -288,9 +288,9 @@
           <!-- row.// -->
         </div>
         <!-- card.// -->
-        <div class="row">
+        <div class="row mb-0">
           <main class="col-lg-8">
-            <div class="card">
+            <div class="card mb-0">
               <article class="content-body">
                 <h5 class="title">{{ annonces.titre }}</h5>
 

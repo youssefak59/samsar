@@ -159,12 +159,12 @@ export default {
 
       swalWithBootstrapButtons
         .fire({
-          title: "Are you sure?",
-          text: "You won't be able to revert this!",
+          title: "Êtes-vous sûr?",
+          text: "Vous ne pourrez pas revenir en arrière !",
           icon: "warning",
           showCancelButton: true,
-          confirmButtonText: "Yes, delete it!",
-          cancelButtonText: "No, cancel!",
+          confirmButtonText: "Oui, supprimez-le !",
+          cancelButtonText: "Non, annulez !",
           reverseButtons: true
         })
         .then(result => {
@@ -173,14 +173,14 @@ export default {
               if (response.data["status"] == "succsus") {
                 this.GetAnnonceNormal();
                 swalWithBootstrapButtons.fire(
-                  "Deleted!",
-                  "Your file has been deleted.",
+                  "Supprimé !",
+                  "Votre Annonce a été supprimé.",
                   "success"
                 );
               } else {
                 swalWithBootstrapButtons.fire(
-                  "Cancelled",
-                  "Your imaginary file is safe :)",
+                  "Annulé",
+                  "Votre annonce imaginaire est en sécurité :)",
                   "error"
                 );
               }

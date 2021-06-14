@@ -31,6 +31,12 @@ Route::get('/getcountinfo',[AnnonceController::class, 'getCountInfo']);
 Route::get('/allannonce',[AnnonceController::class, 'GetAllFunction']);
 Route::get('/getannoncebyid/{id}',[AnnonceController::class, 'getannoncebyidInput']);
 Route::delete('/deleteannonce/{id}',[AnnonceController::class, 'DeleteAnnonceNormal']);
+Route::post('/addadmin',[AnnonceController::class, 'AddAdmin']);
+Route::get('/getadmins',[AnnonceController::class, 'GetAdmins']);
+Route::delete('/deleteadmin/{id}',[AnnonceController::class, 'DeleteAdmin']);
+
+
+
 
 
 

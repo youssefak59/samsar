@@ -28,9 +28,18 @@ Vue.component(
     "nav-bar-admin",
     require("./components/Admin/NavBarAdmin.vue").default
 );
+// Vue.component(
+//     "profile-admin",
+//     require("./components/Admin/Profile.vue").default
+// );
 
 Vue.component("pagination", require("laravel-vue-pagination"));
-//
+
+//animation
+
+import VuePageTransition from "vue-page-transition";
+
+Vue.use(VuePageTransition);
 
 //
 //validate
