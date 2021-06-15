@@ -99,19 +99,19 @@ export default {
     };
   },
   methods: {
-    CountInfo() {
-      this.polling = setInterval(() => {
-        // this.$store.dispatch('RETRIEVE_DATA_FROM_BACKEND')
-        axios
-          .get("/api/getcountinfo")
-          .then(response => {
-            this.countInfo = response.data["CountInfo"];
-            // console.log(this.countInfo["CountMsgDone"]);
-            setTimeout(CountInfo, 200);
-          })
-          .catch(error => {});
-      }, 3000);
-    },
+    // CountInfo() {
+    //   this.polling = setInterval(() => {
+
+    //     axios
+    //       .get("/api/getcountinfo")
+    //       .then(response => {
+    //         this.countInfo = response.data["CountInfo"];
+
+    //         setTimeout(CountInfo, 200);
+    //       })
+    //       .catch(error => {});
+    //   }, 3000);
+    // },
     GetMsg() {
       axios
         .get("/api/getmsgs")
@@ -126,7 +126,7 @@ export default {
     }
   },
   created() {
-    this.CountInfo();
+    // this.CountInfo();
     this.GetMsg();
   }
 };

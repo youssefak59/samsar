@@ -34,6 +34,8 @@ Route::delete('/deleteannonce/{id}',[AnnonceController::class, 'DeleteAnnonceNor
 Route::post('/addadmin',[AnnonceController::class, 'AddAdmin']);
 Route::get('/getadmins',[AnnonceController::class, 'GetAdmins']);
 Route::delete('/deleteadmin/{id}',[AnnonceController::class, 'DeleteAdmin']);
+Route::put('/updateadmin/{id}',[AnnonceController::class, 'UpdateAdmin']);
+
 
 
 

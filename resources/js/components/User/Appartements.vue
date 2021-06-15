@@ -1,6 +1,8 @@
 <template>
   <div class="container">
-    <vs-row v-if="annonces.length!=0">
+    <!-- {{ annonces['data'].length }} -->
+
+    <vs-row v-if="annonces['countannonce']!=0">
       <vs-breadcrumb align="left">
         <li>
           <i class="fas fa-home"></i>
@@ -8,10 +10,10 @@
           <span class="vs-breadcrum--separator">/</span>
         </li>
         <li>
-          <a href="#" title="Profil">{{ annonces[0].Type_bien }}</a>
+          <!-- <a href="#" title="Profil">{{ annonces[0].Type_bien }}</a> -->
           <span class="vs-breadcrum--separator">/</span>
         </li>
-        <li aria-current="page" class="active">{{ annonces[0].Transaction }}</li>
+        <!-- <li aria-current="page" class="active">{{ annonces[0].Transaction }}</li> -->
       </vs-breadcrumb>
     </vs-row>
     <vs-row vs-justify="center">
@@ -122,7 +124,7 @@
         <b>Aucun</b> Resultat
       </span>
     </vs-alert>
-    <div class="centerx example-loading" v-if="annonces.length!=0">
+    <div class="centerx example-loading" v-if="annonces['countannonce']!=0">
       <div class="fill-row-loading">
         <div
           :class="{'activeLoading':activeLoading}"
@@ -136,7 +138,7 @@
                   <div class="card sticky-top">
                     <div class="card-body p-2">
                       <div class="card-titl d-flex justify-content-center float-left">
-                        <span>&nbsp; {{ annonces[0].Type_bien }} à {{ annonces[0].ville }} (19131 annonces)</span>
+                        <!-- <span>&nbsp; {{ annonces[0].Type_bien }} à {{ annonces[0].ville }} (19131 annonces)</span> -->
                       </div>
                     </div>
                   </div>
@@ -144,7 +146,7 @@
               </vs-row>
               <vs-row>
                 <vs-col
-                  v-for="(item,key) in annonces"
+                  v-for="(item,key) in annonces.data"
                   :key="key"
                   type="flex"
                   vs-justify="center"
@@ -204,22 +206,6 @@
                             </span>-->
                           </div>
                         </article>
-                        <!-- col.// -->
-                        <!-- <aside class="col-sm-3">
-                          <div class="price-wrap mt-2">
-                            <span class="price h5">{{ item.prix }} DH</span>
-                          </div>
-                          <p class="small text-success">{{ item.Transaction }}</p>
-                          <br>
-                          <p>
-                            <br>
-                            <a
-                              :href="'/view/'+item.id+'/?ville='+item.ville+'&type='+item.Type_bien+'&transaction='+item.Transaction"
-                              class="btn btn-info"
-                            >Contacter</a>
-                          </p>
-                        </aside>-->
-                        <!-- col.// -->
                       </div>
 
                       <!-- row.// -->
@@ -261,7 +247,7 @@
                     </p>
                     <figcaption class="info-wrap">
                       <!-- <p class="title text-truncate">J{{ item.titre }}</p> -->
-                      <!-- <small class="text-muted">{{ item.Type_bien }} , {{ item.Transaction }}</small> -->
+                      <small class="text-muted">{{ item.Type_bien }} , {{ item.Transaction }}</small>
                       <div class="price mt-2">
                         <span>Aucun annonces premium</span>
                         <span class="float-right flag">
@@ -315,20 +301,19 @@
           </div>
           <vs-row vs-justify="center">
             <vs-col type="flex" vs-justify="center" vs-align="center" vs-w="6">
-              <!-- <div>
-                <vs-pagination :data="annonces" :total="5"></vs-pagination>
-              </div>-->
-              <!-- <pagination
-                v-if="paginationRech"
+              <!-- <h1>sadfasdfasd</h1> -->
+              <pagination
+                v-if="activepaginate2"
                 :data="annonces"
                 @pagination-change-page="Recherche"
-              ></pagination>-->
-              <!-- <pagination v-else :data="annonces" @pagination-change-page="GetAnoonceA"></pagination> -->
+              ></pagination>
+              <pagination v-else :data="annonces" @pagination-change-page="GetAnoonceA"></pagination>
             </vs-col>
           </vs-row>
         </div>
       </div>
     </div>
+    <!-- <Recherche :id="1"></Recherche> -->
   </div>
 </template>
 <style>
@@ -404,10 +389,11 @@
 
 <script>
 import "material-icons/iconfont/material-icons.css";
+// import Recherche from "./Recherche.vue";
 export default {
   data() {
     return {
-      currentx: 1,
+      activepaginate2: false,
       paginationRech: false,
       test1: "",
       annonces: {},
@@ -422,7 +408,8 @@ export default {
       typeCount: [],
       activeLoading: false,
       popupActivo: false,
-      countpremium: 0
+      countpremium: 0,
+      countannonce: 0
     };
   },
   methods: {
@@ -451,10 +438,10 @@ export default {
         });
     },
     Recherche(page = 1) {
+      this.activepaginate2 = true;
       this.annonces = {};
-
       axios
-        .get("/api/getannonce", {
+        .get("/api/getannonce?page=" + page, {
           params: {
             type: this.typebien,
             tran: this.transaction,
@@ -480,7 +467,7 @@ export default {
                 this.$vs.loading.close();
                 this.invalid = true;
               }, 800);
-            } else if (this.annonces.length == 0) {
+            } else if (this.countannonce == 0) {
               // alert(this.annonces.length);
               this.activeLoading = true;
               this.$vs.loading({
@@ -488,7 +475,7 @@ export default {
               });
             }
             this.annonces = response.data["annones"];
-            if (this.annonces.length != 0) {
+            if (this.countannonce != 0) {
               // alert(this.annonces.length);
               setTimeout(() => {
                 this.activeLoading = false;
@@ -499,27 +486,33 @@ export default {
         })
         .catch(error => {});
     },
+
     GetAnoonceA(page = 1) {
       this.paginationRech = false;
       this.annonces = {};
       this.annoncesPremium = {};
       axios
-        .get("/api/maroc")
+        .get("/api/maroc?page=" + page)
         .then(response => {
           if (response.data["status"] == "suscuss") {
-            if (this.annonces.length == 0) {
-              // alert(this.annonces.length);
+            this.countannonce = response.data["countannonce"];
+            console.log(this.countannonce);
+            // console.log(this.annonces["current_page"]);
+
+            // console.log(this.annonces["data"]);
+            if (this.countannonce == 0) {
               this.activeLoading = true;
               this.$vs.loading({
                 type: "default"
               });
             }
+
             this.annonces = response.data["annones"];
+
             this.annoncesPremium = response.data["annoncespremium"];
             this.countpremium = response.data["countpremium"];
 
-            if (this.annonces.length != 0) {
-              // alert(this.annonces.length);
+            if (this.countannonce != 0) {
               setTimeout(() => {
                 this.activeLoading = false;
                 this.$vs.loading.close();
@@ -528,7 +521,7 @@ export default {
           }
         })
         .catch(error => {
-          console.log("hello");
+          console.log("error");
         });
     },
     CountType() {
@@ -546,7 +539,8 @@ export default {
   },
   mounted() {},
   created() {
-    this.openLoading();
+    // this.openLoading();
+
     this.GetRegion();
     this.GetAnoonceA();
     this.CountType();

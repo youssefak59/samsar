@@ -110,7 +110,7 @@ class AnnonceController extends Controller
                                 ['annonces.region','=',$request->region],
                                 ['annonces.ville','=',$request->ville],
                             ])
-                            ->get();
+                            ->paginate(10);
         $annoncesCount=DB::table('images')
                             ->join('annonces','annonces.id','=','images.id_annonce')
                             ->where([
@@ -131,7 +131,7 @@ class AnnonceController extends Controller
                                     ['annonces.Type_bien','=',$request->type],
                                     ['annonces.Transaction','=',$request->tran],
                                 ])
-                                ->get();
+                                ->paginate(10);
             $annoncescount2=DB::table('images')
                                 ->join('annonces','annonces.id','=','images.id_annonce')
                                 ->where([
@@ -154,9 +154,19 @@ class AnnonceController extends Controller
                             ->where([
                                 ['annonces.Type_bien','=',"Appartements"],
                                 ['annonces.Transaction','=',"Location"],
-                                 ['annonces.typeannonce','=',"Normal"],
+                                ['annonces.typeannonce','=',"Normal"],
                             ])
-                            ->get();
+                            ->paginate(10);
+
+        $countannonce=DB::table('images')
+                            ->join('annonces','annonces.id','=','images.id_annonce')
+                            ->where([
+                                ['annonces.Type_bien','=',"Appartements"],
+                                ['annonces.Transaction','=',"Location"],
+                                ['annonces.typeannonce','=',"Normal"],
+                            ])
+                            ->count();
+
         $annoncesPremium=DB::table('images')
                             ->join('annonces','annonces.id','=','images.id_annonce')
                             ->where([
@@ -171,9 +181,7 @@ class AnnonceController extends Controller
                             ])
                             ->count();                    
                                        
-        return response()->json(["status"=>"suscuss","annones"=>$annonces,"annoncespremium"=>$annoncesPremium,"countpremium"=>$countPremium
-        
-        ]);                   
+        return response()->json(["status"=>"suscuss","annones"=>$annonces,"annoncespremium"=>$annoncesPremium,"countpremium"=>$countPremium,"countannonce"=>$countannonce]);                   
     }
     public function gettest(Request $request){
         return $request->all();
@@ -295,10 +303,7 @@ class AnnonceController extends Controller
                             ->join('annonces','annonces.id','=','images.id_annonce')
                              ->where("annonces.typeannonce","Normal")
                              ->orderBy('annonces.created_at', 'DESC')
-                            ->paginate(10);
-
- 
-                            
+                            ->paginate(10);                
           if ($allannonce) {
             return response()->json(["status"=>"sucssus","allannonce"=>$allannonce]);
 
@@ -370,6 +375,35 @@ class AnnonceController extends Controller
          if(Db::table("users")->where('id',$id)->delete())return response()->json(["status"=>"success"]);
          return response()->json(["status"=>"error"]);
 
+     }
+     public function UpdateAdmin($id,Request $request){
+        
+
+        //  return $request;
+            $request->validate([
+                'name' =>'required',
+                'email'     =>'required|email',
+                'password'       =>'required',
+                'oldpassword'       =>'required',
+                'fonction'      =>'required',
+                
+            ]);
+            $userPass=User::find($id);
+        //  return \Hash::make($request->password);
+        if (\Hash::check($request->oldpassword, $userPass->password)) {
+           $updateAdmin=Db::table("users")
+                        ->where("id",$id)
+                        ->update([
+                            "name"=>$request->name,
+                            "email"=>$request->email,
+                            "password"=>\Hash::make($request->password),
+                            "fonctiontype"=>$request->fonction
+                        ]);
+                        return response()->json(["status"=>"success",]);
+
+        }
+        else return response()->json(["status"=>"error","msg"=>"Ancien mot de passe incorrect "]);
+         
      }
 
 

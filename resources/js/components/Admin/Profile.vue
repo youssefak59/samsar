@@ -106,7 +106,7 @@
                   <div class="col">
                     <vs-input
                       icon="person_pin"
-                      label="Name"
+                      label="Nom et Prenom"
                       v-model="profile.name"
                       placeholder="Name"
                     />
@@ -127,7 +127,7 @@
                       icon="lock"
                       type="password"
                       v-model="profile.password"
-                      label="Password"
+                      label="Mot de passe"
                       placeholder="Password"
                     />
                   </div>
@@ -186,7 +186,13 @@
                         <b>{{ item.fonctiontype }}</b>
                       </td>
                       <td class="text-primary d-flex justify-content-center">
-                        <vs-button color="primary" type="border" class="mr-2" icon="edit"></vs-button>
+                        <vs-button
+                          color="primary"
+                          @click="EditAdmin(item)"
+                          type="border"
+                          class="mr-2"
+                          icon="edit"
+                        ></vs-button>
                         <vs-button color="danger" @click="DeleteAdmin(item)" icon="delete"></vs-button>
                       </td>
                     </tr>
@@ -203,9 +209,85 @@
         </div>
       </div>
     </div>
+    <vs-popup class="holamundo" title="Modifier" :active.sync="popupActivoEdit">
+      <div>
+        <div class="row mb-2">
+          <div class="col-lg-12 d-flex justify-content-center">
+            <vs-input
+              class="input-name"
+              icon="person_pin"
+              label="Nom et Prenom"
+              v-model="editprofil.name"
+              placeholder="Name"
+            />
+          </div>
+        </div>
+        <div class="row mb-2">
+          <div class="col-lg-6 col-sm-12">
+            <vs-input
+              class="input-name"
+              icon="email"
+              v-model="editprofil.email"
+              type="email"
+              label="Email"
+              placeholder="Email"
+            />
+          </div>
+          <div class="col-lg-6 col-sm-12">
+            <vs-input
+              class="input-name"
+              icon="lock"
+              type="text"
+              v-model="editprofil.oldpassword"
+              label="Ancien mot de passe"
+              placeholder="mot de passe"
+            />
+          </div>
+        </div>
+        <div class="row mb-2">
+          <div class="col-lg-6 col-sm-12">
+            <vs-input
+              class="input-name"
+              icon="lock"
+              type="text"
+              v-model="editprofil.password"
+              label="Nouveau mot de passe"
+              placeholder="mot de passe"
+            />
+          </div>
+          <div class="col-lg-6 col-sm-12">
+            <vs-select
+              class="input-name"
+              icon="admin_panel_settings"
+              label="Fonction"
+              v-model="editprofil.fonction"
+            >
+              <vs-select-item value="Super admin" text="Super admin"/>
+              <vs-select-item value="Admin" text="Admin"/>
+            </vs-select>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col">
+            <div class="float-right mt-3">
+              <vs-button
+                @click="UpdateAdmin"
+                icon="group_add"
+                color="primary"
+                type="border"
+              >Modifier</vs-button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </vs-popup>
   </div>
 </template>
 <style>
+.input-name {
+  width: 100% !important;
+}
 .padding {
   padding: 3rem !important;
 }
@@ -358,8 +440,17 @@ export default {
         password: "",
         fonction: "Admin"
       },
+      editprofil: {
+        id: "",
+        name: "",
+        email: "",
+        password: "",
+        oldpassword: "",
+        fonction: ""
+      },
       admins: {},
-      errors: {}
+      errors: {},
+      popupActivoEdit: false
     };
   },
   methods: {
@@ -377,9 +468,11 @@ export default {
             });
             this.openLoading();
             this.GetAdmin();
+            this.profile.name = "";
+            this.profile.email = "";
+            this.profile.password = "";
           } else {
             // this.errors = response.data[errors];
-            alert("this.errors");
           }
         })
         .catch(error => {
@@ -458,6 +551,51 @@ export default {
               "Votre annonce imaginaire est en sécurité :)",
               "error"
             );
+          }
+        });
+    },
+
+    EditAdmin(item) {
+      this.popupActivoEdit = true;
+      this.editprofil.id = item.id;
+      this.editprofil.name = item.name;
+      this.editprofil.email = item.email;
+      this.editprofil.fonction = item.fonctiontype;
+    },
+    UpdateAdmin() {
+      axios
+        .put("/api/updateadmin/" + this.editprofil.id, this.editprofil)
+        .then(response => {
+          if (response.data["status"] == "error") {
+            let color = `danger`;
+            this.$vs.notify({
+              title: "Error",
+              text: response.data["msg"],
+              color: color
+            });
+          } else {
+            this.openLoading();
+            this.GetAdmin();
+            let color = `success`;
+
+            this.$vs.notify({
+              title: "success",
+              text: "l'administrateur a été modifié",
+              color: color
+            });
+          }
+        })
+        .catch(error => {
+          if (error.response.status == 422) {
+            this.errors = error.response.data.errors;
+
+            let color = `danger`;
+
+            this.$vs.notify({
+              title: "Error",
+              text: "Les données fournies sont invalides.",
+              color: color
+            });
           }
         });
     }
