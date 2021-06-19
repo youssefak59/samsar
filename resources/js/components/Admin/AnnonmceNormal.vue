@@ -21,7 +21,7 @@
           </div>
           <!-- {{ annonces["data"].length }} -->
           <div class="card-body">
-            <div v-if="annonces['data'].length==0 ">
+            <div v-if="annonces['total']==0">
               <div class="d-flex justify-content-center">
                 <vs-alert
                   color="danger"

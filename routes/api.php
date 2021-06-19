@@ -8,7 +8,6 @@ use App\Http\Controllers\AnnonceController;
 
 
 
-Route::post('/loginadmin', [AuthController::class, 'Login']);
 Route::post('/posting/annonce', [AnnonceController::class, 'CreateAnnonce']);
 
 

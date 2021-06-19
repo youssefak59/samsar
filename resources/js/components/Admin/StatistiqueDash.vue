@@ -73,60 +73,7 @@
           </div>
         </div>
       </div>
-      <!-- <div class="row">
-        <div class="col-md-4">
-          <div class="card card-chart">
-            <div class="card-header card-header-success">
-              <div class="ct-chart" id="dailySalesChart"></div>
-            </div>
-            <div class="card-body">
-              <h4 class="card-title">Daily Sales</h4>
-              <p class="card-category">
-                <span class="text-success">
-                  <i class="fa fa-long-arrow-up"></i> 55%
-                </span> increase in today sales.
-              </p>
-            </div>
-            <div class="card-footer">
-              <div class="stats">
-                <i class="material-icons">access_time</i> updated 4 minutes ago
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="card card-chart">
-            <div class="card-header card-header-warning">
-              <div class="ct-chart" id="websiteViewsChart"></div>
-            </div>
-            <div class="card-body">
-              <h4 class="card-title">Email Subscriptions</h4>
-              <p class="card-category">Last Campaign Performance</p>
-            </div>
-            <div class="card-footer">
-              <div class="stats">
-                <i class="material-icons">access_time</i> campaign sent 2 days ago
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="card card-chart">
-            <div class="card-header card-header-danger">
-              <div class="ct-chart" id="completedTasksChart"></div>
-            </div>
-            <div class="card-body">
-              <h4 class="card-title">Completed Tasks</h4>
-              <p class="card-category">Last Campaign Performance</p>
-            </div>
-            <div class="card-footer">
-              <div class="stats">
-                <i class="material-icons">access_time</i> campaign sent 2 days ago
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>-->
+
       <div class="row">
         <div class="col-lg-6 col-md-12">
           <div class="card">
@@ -165,7 +112,7 @@
                       <tr v-for="(item,index) in messages" :key="index">
                         <td>
                           <div class="form-check">
-                            <label class="form-check-label">
+                            <!-- <label class="form-check-label">
                               <input
                                 class="form-check-input"
                                 type="checkbox"
@@ -173,11 +120,14 @@
                                 disabled
                                 value
                               >
-                              <!-- <vs-checkbox disabled="true" v-model=""></vs-checkbox> -->
                               <span class="form-check-sign">
                                 <span class="check"></span>
                               </span>
-                            </label>
+                            </label>-->
+                            <vs-switch color="success" v-model="item.done" disabled>
+                              <span slot="on">Vérifié</span>
+                              <span slot="off">Non vérifié</span>
+                            </vs-switch>
                           </div>
                         </td>
                         <td>{{ item.msg.substring(0,40) }}</td>
@@ -209,7 +159,7 @@
                       <tr v-for="(item,index) in messages" :key="index">
                         <td v-if="item.done==true">
                           <div class="form-check">
-                            <label class="form-check-label">
+                            <!-- <label class="form-check-label">
                               <input
                                 class="form-check-input"
                                 type="checkbox"
@@ -217,11 +167,15 @@
                                 disabled
                                 value
                               >
-                              <!-- <vs-checkbox disabled="true" v-model=""></vs-checkbox> -->
                               <span class="form-check-sign">
                                 <span class="check"></span>
                               </span>
-                            </label>
+                            </label>-->
+
+                            <vs-switch color="success" v-model="item.done" disabled>
+                              <span slot="on">Vérifié</span>
+                              <span slot="off">Non vérifié</span>
+                            </vs-switch>
                           </div>
                         </td>
                         <td v-if="item.done==true">{{ item.msg.substring(0,40) }}</td>
@@ -371,7 +325,7 @@
     </div>
     <!-- modals -->
     <vs-popup class="holamundo" :title="InfoMsg.name" :active.sync="popupActivoMsg">
-      <div class="d-flex justify-content-center">{{ this.InfoMsg.created_at | formatDate }}</div>
+      <div class="d-flex justify-content-center">{{ this.InfoMsg.created_at }}</div>
       <!-- <div class="icontext align-items-start"> -->
       <div class="row">
         <div class="col-lg-1 mr-0">
@@ -398,6 +352,7 @@
       </div>
       <!-- </div> -->
     </vs-popup>
+    <!-- <navbar :count="countInfo['CountMsgNotDone']"></navbar> -->
   </div>
 </template>
 <style>
@@ -416,14 +371,14 @@
 </style>
 
 <script>
-// import NabBar from "./components/Admin/NavBarAdmin.vue";
+import navbar from "./NavBarAdmin.vue";
 import moment from "moment";
 // import nav from "./components/Admin/NavBar.vue";
 
 export default {
   name: "StatistiqueDash",
   components: {
-    // navbar: nav
+    navbar: navbar
   },
   data() {
     return {

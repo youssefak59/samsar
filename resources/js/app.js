@@ -28,6 +28,10 @@ Vue.component(
     "nav-bar-admin",
     require("./components/Admin/NavBarAdmin.vue").default
 );
+Vue.component(
+    "profile-admin",
+    require("./components/Admin/ProfileAdmin.vue").default
+);
 // Vue.component(
 //     "profile-admin",
 //     require("./components/Admin/Profile.vue").default

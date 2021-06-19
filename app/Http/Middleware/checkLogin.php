@@ -16,27 +16,12 @@ class checkLogin
      */
     public function handle(Request $request, Closure $next)
     { 
-         return $next($request);
-        // if (Auth::check()) {
-
-        //     return $next($request);
         
-        // }
-        // return response()->json([
-        //     'msg'=>'Your account is inactive',
-            
-        // ]);
-        // \Log::info('dsd');
-        // if (auth()->user()->name=='admin')
-        //   return $next($request);   
-        // else{
-        //      return response()->json([
-        //     'msg'=>'not login',
-        //     'auth'=>Auth::check(),
-        // ]);
-        // }
-       
-        // return redirect('/login');
+        if (Auth::check()){
+            return $next($request);
+        }
+        else return redirect('/login');
+        
          
         
     }

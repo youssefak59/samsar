@@ -1,3 +1,4 @@
+
 <template>
   <div>
     <div>
@@ -9,13 +10,14 @@
                 <div class="col-sm-4 bg-c-lite-green user-profile">
                   <div class="card-block text-center text-white">
                     <div class="m-b-25">
-                      <img
-                        src="https://img.icons8.com/bubbles/100/000000/user.png"
-                        class="img-radius"
-                        alt="User-Profile-Image"
-                      >
+                      <vs-avatar
+                        size="70px"
+                        v-if="infoadminauth.image"
+                        :src="'/storage/'+infoadminauth.image"
+                      />
+                      <vs-avatar v-else size="70px"/>
                     </div>
-                    <h6 class="f-w-600">Vip SErvices</h6>
+                    <h6 class="f-w-600">{{ infoadminauth.name }}</h6>
                     <!-- <p>Web Designer</p> -->
                     <i class="mdi mdi-square-edit-outline feather icon-edit m-t-10 f-16"></i>
                   </div>
@@ -24,24 +26,26 @@
                   <div class="card-block">
                     <h6 class="m-b-20 p-b-5 b-b-default f-w-600">Information</h6>
                     <div class="row">
-                      <div class="col-sm-6">
+                      <div class="col-sm-12">
                         <p class="m-b-10 f-w-600">Email</p>
-                        <h6 class="text-muted f-w-400">rntng@gmail.com</h6>
+                        <h6 class="text-muted f-w-400">{{ infoadminauth.email }}</h6>
                       </div>
-                      <div class="col-sm-6">
+                      <!-- <div class="col-sm-6">
                         <p class="m-b-10 f-w-600">Phone</p>
                         <h6 class="text-muted f-w-400">98979989898</h6>
-                      </div>
+                      </div>-->
                     </div>
                     <h6 class="m-b-20 m-t-40 p-b-5 b-b-default f-w-600">Projects</h6>
                     <div class="row">
                       <div class="col-sm-6">
-                        <p class="m-b-10 f-w-600">Recent</p>
-                        <h6 class="text-muted f-w-400">Sam Disuja</h6>
+                        <p class="m-b-10 f-w-600">Fonction</p>
+                        <h6 class="text-muted f-w-400">{{ infoadminauth.fonctiontype }}</h6>
                       </div>
                       <div class="col-sm-6">
-                        <p class="m-b-10 f-w-600">Most Viewed</p>
-                        <h6 class="text-muted f-w-400">Dinoter husainm</h6>
+                        <p class="m-b-10 f-w-600">Status</p>
+                        <vs-switch color="success" v-model="switch2" disabled>
+                          <span slot="on">Connecté</span>
+                        </vs-switch>
                       </div>
                     </div>
                     <ul class="social-link list-unstyled m-t-40 m-b-10">
@@ -175,6 +179,7 @@
                     <th>Email</th>
                     <th>password</th>
                     <th>Fonction</th>
+                    <th>Status</th>
                     <th class="d-flex justify-content-center">Action</th>
                   </thead>
                   <tbody>
@@ -185,6 +190,16 @@
                       <td class="text-primary">
                         <b>{{ item.fonctiontype }}</b>
                       </td>
+                      <td v-if="item.id===infoadminauth.id">
+                        <vs-switch color="success" v-model="switch2" disabled>
+                          <span slot="on">Connecté</span>
+                        </vs-switch>
+                      </td>
+                      <td v-else>
+                        <vs-switch color="danger" v-model="switch3" disabled>
+                          <span slot="on">déconnecté</span>
+                        </vs-switch>
+                      </td>
                       <td class="text-primary d-flex justify-content-center">
                         <vs-button
                           color="primary"
@@ -193,7 +208,12 @@
                           class="mr-2"
                           icon="edit"
                         ></vs-button>
-                        <vs-button color="danger" @click="DeleteAdmin(item)" icon="delete"></vs-button>
+                        <vs-button
+                          color="danger"
+                          v-if="item.id!=infoadminauth.id"
+                          @click="DeleteAdmin(item)"
+                          icon="delete"
+                        ></vs-button>
                       </td>
                     </tr>
                   </tbody>
@@ -237,7 +257,7 @@
             <vs-input
               class="input-name"
               icon="lock"
-              type="text"
+              type="password"
               v-model="editprofil.oldpassword"
               label="Ancien mot de passe"
               placeholder="mot de passe"
@@ -249,7 +269,7 @@
             <vs-input
               class="input-name"
               icon="lock"
-              type="text"
+              type="password"
               v-model="editprofil.password"
               label="Nouveau mot de passe"
               placeholder="mot de passe"
@@ -434,6 +454,8 @@ import "sweetalert2/src/sweetalert2.scss";
 export default {
   data() {
     return {
+      switch2: true,
+      switch3: true,
       profile: {
         name: "",
         email: "",
@@ -450,6 +472,7 @@ export default {
       },
       admins: {},
       errors: {},
+      infoadminauth: {},
       popupActivoEdit: false
     };
   },
@@ -598,11 +621,22 @@ export default {
             });
           }
         });
+    },
+    InfoAdmin() {
+      axios
+        .get("/adminauth0")
+        .then(response => {
+          if (response.data["status"] == "success") {
+            this.infoadminauth = response.data["infoadminauth"];
+          }
+        })
+        .catch(error => {});
     }
   },
   created() {
     this.GetAdmin();
     this.openLoading();
+    this.InfoAdmin();
   }
 };
 </script>

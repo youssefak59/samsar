@@ -130,13 +130,14 @@
         </section>
         <!-- footer-top.// -->
 
-        <section class="footer-copyright border-top">
-          <p class="float-left text-muted">© 2019 Company All rights resetved</p>
+       <section class="footer-copyright border-top">
+          <p class="float-left text-muted">© 2021 Company All rights resetved Yousssef akchar</p>
           <p target="_blank" class="float-right text-muted">
             <a href="#">Privacy &amp; Cookies</a> &nbsp; &nbsp;
             <a href="#">Accessibility</a>
           </p>
         </section>
+
       </div>
       <!-- //container -->
     </footer>

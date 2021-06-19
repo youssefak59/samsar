@@ -561,6 +561,10 @@ export default {
               text: "Message envoyé",
               color: color
             });
+            this.popupActivo2 = false;
+            this.contact.name = "";
+            this.contact.tele = "";
+            this.contact.msg = "";
           } else {
             let color = `danger`;
 

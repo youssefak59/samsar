@@ -7,7 +7,7 @@
             <h4 class="card-title">Annonces Premium</h4>
           </div>
           <div class="card-body">
-            <div v-if="annoncePremium['data'].length==0">
+            <div v-if="annoncePremium['total']==0">
               <div class="d-flex justify-content-center">
                 <vs-alert
                   color="danger"

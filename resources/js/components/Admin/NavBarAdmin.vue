@@ -45,7 +45,7 @@
                 aria-expanded="false"
               >
                 <i class="material-icons">notifications</i>
-                <span class="notification">{{ countInfo["CountMsgNotDone"] }}</span>
+                <span class="notification">{{ count }}</span>
                 <p class="d-lg-none d-md-block">Some Actions</p>
               </a>
               <div
@@ -71,14 +71,15 @@
                 class="dropdown-menu dropdown-menu-right"
                 aria-labelledby="navbarDropdownProfile"
               >
-                <!-- <a href="#">Profile</a> -->
                 <router-link class="dropdown-item mb-1" to="/fr/cms/profile">Profile</router-link>
-                <a class="dropdown-item" href="#">Settings</a>
+                <!-- <a class="dropdown-item" href="#">Settings</a>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="dash?#/fr/cms/profile">Log out</a>
+                <a class="dropdown-item" href="dash?#/fr/cms/profile">Log out</a>-->
               </div>
             </li>
           </ul>
+          <!-- <vs-button radius color="danger" @click="logout" type="flat" icon="settings_power"></vs-button> -->
+          <vs-button radius color="danger" @click="logout" type="flat" icon="settings_power"></vs-button>
         </div>
       </div>
     </nav>
@@ -91,27 +92,31 @@
 
 <script>
 // import NabBar from "./components/Admin/StatistiqueDash.vue";
+import Swal from "sweetalert2/dist/sweetalert2.js";
+
+import "sweetalert2/src/sweetalert2.scss";
 export default {
+  props: ["count"],
   data() {
     return {
+      countMsgNotDon: 0,
       countInfo: {},
       messages: {}
     };
   },
   methods: {
-    // CountInfo() {
-    //   this.polling = setInterval(() => {
+    CountInfo() {
+      this.polling = setInterval(() => {
+        axios
+          .get("/api/getcountinfo")
+          .then(response => {
+            this.countInfo = response.data["CountInfo"];
 
-    //     axios
-    //       .get("/api/getcountinfo")
-    //       .then(response => {
-    //         this.countInfo = response.data["CountInfo"];
-
-    //         setTimeout(CountInfo, 200);
-    //       })
-    //       .catch(error => {});
-    //   }, 3000);
-    // },
+            setTimeout(CountInfo, 200);
+          })
+          .catch(error => {});
+      }, 3000);
+    },
     GetMsg() {
       axios
         .get("/api/getmsgs")
@@ -123,11 +128,34 @@ export default {
         .catch(error => {
           console.log(error);
         });
+    },
+    logout() {
+      Swal.fire({
+        title: "Êtes-vous sûr?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Se déconnecter"
+      }).then(result => {
+        if (result.isConfirmed) {
+          axios
+            .post("/logout")
+            .then(response => {
+              if (response.data["status"] == "success") {
+                window.location.href = "/login";
+              }
+            })
+            .catch(error => {});
+        }
+      });
     }
   },
   created() {
-    // this.CountInfo();
+    this.CountInfo();
     this.GetMsg();
+    // this.countMsgNotDon = this.countmsg;
+    alert(this.count);
   }
 };
 </script>

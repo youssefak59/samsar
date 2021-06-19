@@ -4,16 +4,16 @@
 
     <vs-row v-if="annonces['countannonce']!=0">
       <vs-breadcrumb align="left">
-        <li>
+        <li aria-current="page" class="active">
           <i class="fas fa-home"></i>
-          <a href="#" title="Home">Accueil</a>
-          <span class="vs-breadcrum--separator">/</span>
+          <a title="Home">Accueil</a>
+          <!-- <span class="vs-breadcrum--separator">/</span> -->
         </li>
         <li>
-          <!-- <a href="#" title="Profil">{{ annonces[0].Type_bien }}</a> -->
-          <span class="vs-breadcrum--separator">/</span>
+          <!-- <a href="#" title="Profil">{{ annonces['data'].Type_bien }}</a> -->
+          <!-- <span class="vs-breadcrum--separator">/</span> -->
         </li>
-        <!-- <li aria-current="page" class="active">{{ annonces[0].Transaction }}</li> -->
+        <!-- <li aria-current="page" class="active">{{ annonces['data'].Transaction }}</li> -->
       </vs-breadcrumb>
     </vs-row>
     <vs-row vs-justify="center">
@@ -138,7 +138,11 @@
                   <div class="card sticky-top">
                     <div class="card-body p-2">
                       <div class="card-titl d-flex justify-content-center float-left">
-                        <!-- <span>&nbsp; {{ annonces[0].Type_bien }} à {{ annonces[0].ville }} (19131 annonces)</span> -->
+                        <span>
+                          &nbsp;
+                          <!-- {{ annonces.data[0].Type_bien }} à {{ annonces.data[0].ville }} -->
+                          (19131 annonces)
+                        </span>
                       </div>
                     </div>
                   </div>
@@ -246,8 +250,6 @@
                       <i class="far fa-plus-square fa-10x"></i>
                     </p>
                     <figcaption class="info-wrap">
-                      <!-- <p class="title text-truncate">J{{ item.titre }}</p> -->
-                      <small class="text-muted">{{ item.Type_bien }} , {{ item.Transaction }}</small>
                       <div class="price mt-2">
                         <span>Aucun annonces premium</span>
                         <span class="float-right flag">
@@ -496,7 +498,7 @@ export default {
         .then(response => {
           if (response.data["status"] == "suscuss") {
             this.countannonce = response.data["countannonce"];
-            console.log(this.countannonce);
+
             // console.log(this.annonces["current_page"]);
 
             // console.log(this.annonces["data"]);

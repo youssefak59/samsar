@@ -9,6 +9,7 @@ use App\Models\Ville;
 use App\Models\Image;
 use App\Models\Message;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
@@ -16,6 +17,7 @@ use Carbon\Carbon;
 class AnnonceController extends Controller
 {
     public function CreateAnnonce(Request $request){
+        
              $request->validate([
                  'pics' =>'required',
                 'adresse'     =>'required',
@@ -281,14 +283,14 @@ class AnnonceController extends Controller
                              return response()->json(["status"=>"succsus","msgUpdate"=>$msgUpdate]);
                         }
                         else return response()->json(["status"=>"error"]);
-                      
+
     }
     public function getCountInfo(){
         $datenow =\Carbon\Carbon::today()->subDays(0)->format('Y-m-d-h');
         // dd($datenow);
         $countAnnonce=Annonce::where("typeannonce","Normal")->count();
         $countPremium=Annonce::where("typeannonce","Premium")->count();
-        $CountMsgNotDone=Message::where("done","=", false)->count();
+        $CountMsgNotDone=Message::where("done","=",false)->count();
         $CountMsgDone=Message::where("done","=", true)->count();
         $CoountInfo = array(
             'countAnnonce'      =>  $countAnnonce,
@@ -403,7 +405,33 @@ class AnnonceController extends Controller
 
         }
         else return response()->json(["status"=>"error","msg"=>"Ancien mot de passe incorrect "]);
-         
+        
+     }
+     public function UpdateProfile(Request $request){
+        //  return $request;
+        $request->validate([
+                'image' =>'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                
+                
+            ]);
+         if (Auth::check()) {
+           $Changeimage=User::find(Auth::user()->id);
+        if ($Changeimage) {
+            $path=$request->image->store('profiles');
+             $Changeimage->image=$path;
+             if ($Changeimage->save()) {
+                $selectProfile=User::find(Auth::user()->id);
+                return response()->json(["status"=>"success","user"=>$selectProfile]);
+             }
+        }
+         return response("noon");
+         }return response("error");
+        
+               
+     }
+     public function GetInfoAdmiin(){
+         $InfoAdmin=User::find(Auth::user()->id);
+         return response()->json(["status"=>"success","infoadminauth"=>$InfoAdmin]);
      }
 
 
