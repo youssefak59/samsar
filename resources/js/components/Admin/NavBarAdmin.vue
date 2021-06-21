@@ -19,15 +19,6 @@
           <span class="navbar-toggler-icon icon-bar"></span>
         </button>
         <div class="collapse navbar-collapse justify-content-end">
-          <!-- <form class="navbar-form">
-            <div class="input-group no-border">
-              <input type="text" value class="form-control" placeholder="Search...">
-              <button type="submit" class="btn btn-white btn-round btn-just-icon">
-                <i class="material-icons">search</i>
-                <div class="ripple-container"></div>
-              </button>
-            </div>
-          </form>-->
           <ul class="navbar-nav">
             <li class="nav-item">
               <router-link to="/fr/cms">
@@ -35,7 +26,7 @@
                 <p class="d-lg-none d-md-block">Stats</p>
               </router-link>
             </li>
-            <li class="nav-item dropdown">
+            <!-- <li class="nav-item dropdown">
               <a
                 class="nav-link"
                 href="http://example.com"
@@ -45,16 +36,18 @@
                 aria-expanded="false"
               >
                 <i class="material-icons">notifications</i>
-                <span class="notification">{{ count }}</span>
+                <span class="notification">{{ countInfo['CountMsgNotDone'] }}</span>
                 <p class="d-lg-none d-md-block">Some Actions</p>
               </a>
               <div
                 class="dropdown-menu dropdown-menu-right"
                 aria-labelledby="navbarDropdownMenuLink"
               >
-                <a class="dropdown-item" href="#">Mike John responded to your email</a>
+                <a v-for="(item) in messages" :key="item.done==0" class="dropdown-item" href="#">
+                  <span>{{ item.msg }}</span>
+                </a>
               </div>
-            </li>
+            </li>-->
             <li class="nav-item dropdown">
               <a
                 class="nav-link"
@@ -105,17 +98,28 @@ export default {
     };
   },
   methods: {
-    CountInfo() {
-      this.polling = setInterval(() => {
-        axios
-          .get("/api/getcountinfo")
-          .then(response => {
-            this.countInfo = response.data["CountInfo"];
+    // CountInfo() {
+    //   this.polling = setInterval(() => {
+    //     axios
+    //       .get("/api/getcountinfo")
+    //       .then(response => {
+    //         this.countInfo = response.data["CountInfo"];
 
-            setTimeout(CountInfo, 200);
-          })
-          .catch(error => {});
-      }, 3000);
+    //         setTimeout(CountInfo, 200);
+    //       })
+    //       .catch(error => {});
+    //   }, 3000);
+    // },
+
+    CountInfo() {
+      // alert("ok");
+      axios
+        .get("/api/getcountinfo")
+        .then(response => {
+          this.countInfo = response.data["CountInfo"];
+          this.GetMsg();
+        })
+        .catch(error => {});
     },
     GetMsg() {
       axios
@@ -155,7 +159,7 @@ export default {
     this.CountInfo();
     this.GetMsg();
     // this.countMsgNotDon = this.countmsg;
-    alert(this.count);
+    // alert(this.count);
   }
 };
 </script>

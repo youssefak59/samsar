@@ -199,7 +199,7 @@ export default {
         })
         .then(result => {
           if (result.isConfirmed) {
-            axios.delete("/api/deleteannonce/" + item.id).then(response => {
+            axios.delete("/deleteannonce/" + item.id).then(response => {
               if (response.data["status"] == "succsus") {
                 this.GetAnnoncePremium();
                 swalWithBootstrapButtons.fire(

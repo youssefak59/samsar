@@ -15,14 +15,19 @@
         <div class="collapse navbar-collapse" id="navbarCollapse">
           <div class="navbar-nav"></div>
           <div class="navbar-nav ml-auto">
-            <div>
+            <!-- <div>
               <a href="#" class="navbar-brand link">
                 <i class="fas fa-user-circle"></i>
                 Se connecter
               </a>
-            </div>
+            </div>-->
             <div>
-              <vs-button color="success" type="filled" icon="photo_camera">DÉPOSER UNE ANNONCE</vs-button>
+              <vs-button
+                color="success"
+                type="filled"
+                @click="RedirectContactUS"
+                icon="photo_camera"
+              >DÉPOSER UNE ANNONCE</vs-button>
             </div>
           </div>
         </div>
@@ -97,6 +102,9 @@ export default {
     test1: ""
   }),
   methods: {
+    RedirectContactUS() {
+      window.location = "/messages/form";
+    },
     rech() {
       alert(this.test1);
       axios

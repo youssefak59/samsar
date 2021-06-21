@@ -94,12 +94,6 @@
                         <div class="ripple-container"></div>
                       </a>
                     </li>
-                    <!-- <li class="nav-item">
-                      <a class="nav-link" href="#settings" data-toggle="tab">
-                        <i class="material-icons">cloud</i> Server
-                        <div class="ripple-container"></div>
-                      </a>
-                    </li>-->
                   </ul>
                 </div>
               </div>
@@ -110,28 +104,16 @@
                   <table class="table">
                     <tbody>
                       <tr v-for="(item,index) in messages" :key="index">
-                        <td>
+                        <td v-if="item.done==0">
                           <div class="form-check">
-                            <!-- <label class="form-check-label">
-                              <input
-                                class="form-check-input"
-                                type="checkbox"
-                                v-model="item.done"
-                                disabled
-                                value
-                              >
-                              <span class="form-check-sign">
-                                <span class="check"></span>
-                              </span>
-                            </label>-->
                             <vs-switch color="success" v-model="item.done" disabled>
-                              <span slot="on">Vérifié</span>
-                              <span slot="off">Non vérifié</span>
+                              <span slot="on">Validé</span>
+                              <span slot="off">Non Validé</span>
                             </vs-switch>
                           </div>
                         </td>
-                        <td>{{ item.msg.substring(0,40) }}</td>
-                        <td class="td-actions text-right">
+                        <td v-if="item.done==0">{{ item.msg.substring(0,40) }}</td>
+                        <td class="td-actions text-right" v-if="item.done==0">
                           <vs-button
                             radius
                             @click="GetMsgUser(item)"
@@ -159,22 +141,9 @@
                       <tr v-for="(item,index) in messages" :key="index">
                         <td v-if="item.done==true">
                           <div class="form-check">
-                            <!-- <label class="form-check-label">
-                              <input
-                                class="form-check-input"
-                                type="checkbox"
-                                v-model="item.done"
-                                disabled
-                                value
-                              >
-                              <span class="form-check-sign">
-                                <span class="check"></span>
-                              </span>
-                            </label>-->
-
                             <vs-switch color="success" v-model="item.done" disabled>
-                              <span slot="on">Vérifié</span>
-                              <span slot="off">Non vérifié</span>
+                              <span slot="on">Validé</span>
+                              <span slot="off">Non Validé</span>
                             </vs-switch>
                           </div>
                         </td>
@@ -192,105 +161,6 @@
                     </tbody>
                   </table>
                 </div>
-                <div class="tab-pane" id="settings">
-                  <table class="table">
-                    <tbody>
-                      <tr>
-                        <td>
-                          <div class="form-check">
-                            <label class="form-check-label">
-                              <input class="form-check-input" type="checkbox" value>
-                              <span class="form-check-sign">
-                                <span class="check"></span>
-                              </span>
-                            </label>
-                          </div>
-                        </td>
-                        <td>Lines From Great Russian Literature? Or E-mails From My Boss?</td>
-                        <td class="td-actions text-right">
-                          <button
-                            type="button"
-                            rel="tooltip"
-                            title="Edit Task"
-                            class="btn btn-primary btn-link btn-sm"
-                          >
-                            <i class="material-icons">edit</i>
-                          </button>
-                          <button
-                            type="button"
-                            rel="tooltip"
-                            title="Remove"
-                            class="btn btn-danger btn-link btn-sm"
-                          >
-                            <i class="material-icons">close</i>
-                          </button>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <div class="form-check">
-                            <label class="form-check-label">
-                              <input class="form-check-input" type="checkbox" value checked>
-                              <span class="form-check-sign">
-                                <span class="check"></span>
-                              </span>
-                            </label>
-                          </div>
-                        </td>
-                        <td>Flooded: One year later, assessing what was lost and what was found when a ravaging rain swept through metro Detroit</td>
-                        <td class="td-actions text-right">
-                          <button
-                            type="button"
-                            rel="tooltip"
-                            title="Edit Task"
-                            class="btn btn-primary btn-link btn-sm"
-                          >
-                            <i class="material-icons">edit</i>
-                          </button>
-                          <button
-                            type="button"
-                            rel="tooltip"
-                            title="Remove"
-                            class="btn btn-danger btn-link btn-sm"
-                          >
-                            <i class="material-icons">close</i>
-                          </button>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <div class="form-check">
-                            <label class="form-check-label">
-                              <input class="form-check-input" type="checkbox" value checked>
-                              <span class="form-check-sign">
-                                <span class="check"></span>
-                              </span>
-                            </label>
-                          </div>
-                        </td>
-                        <td>Sign contract for "What are conference organizers afraid of?"</td>
-                        <td class="td-actions text-right">
-                          <button
-                            type="button"
-                            rel="tooltip"
-                            title="Edit Task"
-                            class="btn btn-primary btn-link btn-sm"
-                          >
-                            <i class="material-icons">edit</i>
-                          </button>
-                          <button
-                            type="button"
-                            rel="tooltip"
-                            title="Remove"
-                            class="btn btn-danger btn-link btn-sm"
-                          >
-                            <i class="material-icons">close</i>
-                          </button>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
               </div>
             </div>
           </div>
@@ -298,26 +168,45 @@
         <div class="col-lg-6 col-md-12">
           <div class="card">
             <div class="card-header card-header-warning">
-              <h4 class="card-title">Annonces</h4>
-              <p class="card-category">Annonce Premium / Annonces Normal</p>
+              <h4 class="card-title">Messages</h4>
+              <p class="card-category">Annonce Premium</p>
             </div>
+
             <div class="card-body table-responsive">
-              <table class="table table-hover">
-                <thead class="text-warning">
-                  <th>image</th>
-                  <th>Name</th>
-                  <th>Salary</th>
-                  <th>Country</th>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>1</td>
-                    <td>Dakota Rice</td>
-                    <td>$36,738</td>
-                    <td>Niger</td>
-                  </tr>
-                </tbody>
-              </table>
+              <div class="tab-pane active overflow-msg" id="profile">
+                <table class="table">
+                  <tbody>
+                    <tr v-for="(item,index) in mgsPremium" :key="index">
+                      <td>
+                        <div class="form-check">
+                          <vs-switch color="success" v-model="item.done" disabled>
+                            <span slot="on">Validé</span>
+                            <span slot="off">Non Validé</span>
+                          </vs-switch>
+                        </div>
+                      </td>
+                      <td>{{ item.msg.substring(0,40) }}</td>
+                      <td class="td-actions text-right">
+                        <vs-button
+                          radius
+                          @click="GetMsgIfo(item)"
+                          color="primary"
+                          type="flat"
+                          icon="visibility"
+                        ></vs-button>
+
+                        <vs-button
+                          @click="DonePremium(item)"
+                          radius
+                          color="success"
+                          type="flat"
+                          icon="done"
+                        ></vs-button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
         </div>
@@ -339,20 +228,60 @@
         </div>
       </div>
       <div class="row mt-3">
-        <div class="col-lg-6">
+        <div class="col-lg-6 col-sm-12 mb-2">
           <div class="ml-5">
             <vs-button icon="visibility" @click="ViewAnnonce" type="border">Voir annonce</vs-button>
           </div>
         </div>
-        <div class="col-lg-6">
+        <div class="col-lg-6 col-sm-12">
           <div class="float-right mr-5">
-            <vs-button icon="call" disabled type="border">{{ this.InfoMsg.tele }}</vs-button>
+            <a :href="'tel::'+InfoMsg.tele">
+              <vs-button icon="call" type="border">{{ this.InfoMsg.tele }}</vs-button>
+            </a>
           </div>
         </div>
       </div>
       <!-- </div> -->
     </vs-popup>
     <!-- <navbar :count="countInfo['CountMsgNotDone']"></navbar> -->
+    <vs-popup class="holamundo" :title="InfoMsgPremium.name" :active.sync="popupActivoMsgPremuim">
+      <div class="d-flex justify-content-center">{{ this.InfoMsgPremium.created_at }}</div>
+      <!-- <div class="icontext align-items-start"> -->
+      <div class="row">
+        <div class="col-lg-1 mr-0">
+          <vs-avatar color="primary"/>
+        </div>
+        <div class="col-lg-10">
+          <div class="msg-div">
+            <p class="content-ms m-2">{{ this.InfoMsgPremium.msg }}</p>
+          </div>
+          <!-- <small class="text-muted float-right mt-0">{{ this.InfoMsg.created_at | formatDate }}</small> -->
+        </div>
+      </div>
+      <div class="row mt-3">
+        <div class="col-lg-6 col-sm-12 mb-2">
+          <div class="ml-5">
+            <vs-button
+              icon="alternate_email"
+              @click="copyTestingCode"
+              color="primary"
+              type="border"
+            >
+              <span style="color:blue !important">{{ this.InfoMsgPremium.email }}</span>
+            </vs-button>
+            <input type="hidden" id="email-code" :value="InfoMsgPremium.email">
+          </div>
+        </div>
+        <div class="col-lg-6 col-sm-12">
+          <div class="float-right mr-5">
+            <a :href="'tel::'+InfoMsgPremium.tele">
+              <vs-button icon="call" type="border">{{ this.InfoMsgPremium.tele }}</vs-button>
+            </a>
+          </div>
+        </div>
+      </div>
+      <!-- </div> -->
+    </vs-popup>
   </div>
 </template>
 <style>
@@ -375,6 +304,7 @@ import navbar from "./NavBarAdmin.vue";
 import moment from "moment";
 // import nav from "./components/Admin/NavBar.vue";
 
+// import { fetchDataList } from "api";
 export default {
   name: "StatistiqueDash",
   components: {
@@ -384,10 +314,13 @@ export default {
     return {
       messages: [],
       popupActivoMsg: false,
+      popupActivoMsgPremuim: false,
       InfoMsg: {},
+      InfoMsgPremium: {},
       annonceById: {},
       countInfo: {},
-      annonces: {}
+      annonces: {},
+      mgsPremium: {}
     };
   },
   methods: {
@@ -412,7 +345,6 @@ export default {
         .then(response => {
           if (response.data["status"] == "succsus") {
             this.annonceById = response.data["annonceById"];
-            console.log(this.annonceById);
           }
         })
         .catch(error => {
@@ -427,6 +359,28 @@ export default {
             this.messages = {};
             this.messages = response.data["msgUpdate"];
             this.CountInfo();
+            Toast.fire({
+              icon: "success",
+              title: "Message validé "
+            });
+          }
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    },
+    DonePremium(item) {
+      axios
+        .put("/putdonepremium/" + item.id)
+        .then(response => {
+          if (response.data["status"] == "succsus") {
+            this.mgsPremium = {};
+            this.mgsPremium = response.data["msgUpdate"];
+
+            Toast.fire({
+              icon: "success",
+              title: "Message validé "
+            });
           }
         })
         .catch(error => {
@@ -452,7 +406,6 @@ export default {
         .get("/api/getcountinfo")
         .then(response => {
           this.countInfo = response.data["CountInfo"];
-          console.log(this.countInfo["CountMsgDone"]);
         })
         .catch(error => {});
     },
@@ -461,9 +414,57 @@ export default {
       setTimeout(() => {
         this.$vs.loading.close();
       }, 800);
+    },
+    getMsgPremium() {
+      axios
+        .get("/message/premium/view")
+        .then(response => {
+          if (response.data["status"] === "success") {
+            this.mgsPremium = response.data["msgpremium"];
+          }
+        })
+        .catch(error => {});
+    },
+    GetMsgIfo(item) {
+      this.popupActivoMsgPremuim = true;
+      this.InfoMsgPremium = item;
+      // console.log(this.InfoMsgPremium);
+      // axios
+      //   .get("/api/getannonce/" + item.id_annonce)
+      //   .then(response => {
+      //     if (response.data["status"] == "succsus") {
+      //       this.annonceById = response.data["annonceById"];
+      //       console.log(this.annonceById);
+      //     }
+      //   })
+      //   .catch(error => {
+      //     console.log(error);
+      //   });
+    },
+    copyTestingCode() {
+      let testingCodeToCopy = document.querySelector("#email-code");
+      testingCodeToCopy.setAttribute("type", "text"); // 不是 hidden 才能複製
+      testingCodeToCopy.select();
+
+      try {
+        var successful = document.execCommand("copy");
+        var msg = successful ? "successful" : "unsuccessful";
+
+        Toast.fire({
+          icon: "success",
+          title: "copied " + msg
+        });
+      } catch (err) {
+        alert("Oops, unable to copy");
+      }
+
+      /* unselect the range */
+      testingCodeToCopy.setAttribute("type", "hidden");
+      window.getSelection().removeAllRanges();
     }
   },
   created() {
+    this.getMsgPremium();
     this.GetMsg();
     this.CountInfo();
     this.openLoading();

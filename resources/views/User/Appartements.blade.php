@@ -12,6 +12,17 @@
     <!-- Bootstrap -->
 <!-- jQuery -->
 <!-- Bootstrap -->
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-00TRF5DWEM"></script>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-165VQ2M8FT"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-165VQ2M8FT');
+</script>
 <link href="/css/bootstrap.css" rel="stylesheet" type="text/css"/>
 
 <!-- Font awesome 5 -->
@@ -36,7 +47,8 @@
          <appartements></appartements>
          
         
-    <footer class="section-footer border-top">
+         <foo-ter></foo-ter>
+    {{-- <footer class="section-footer border-top">
       <div class="container">
         <section class="footer-top padding-y">
           <div class="row">
@@ -140,7 +152,7 @@
 
       </div>
       <!-- //container -->
-    </footer>
+    </footer> --}}
     </div>
     <script src=" {{ asset('js/app.js') }}"></script>
    

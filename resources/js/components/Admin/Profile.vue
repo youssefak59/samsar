@@ -148,9 +148,17 @@
                   </div>
                 </div>
 
-                <div class="row">
+                <div class="row mt-3">
                   <div class="col">
-                    <div class="float-right mt-3">
+                    <vs-input
+                      icon="phone"
+                      label="Tele (212...)"
+                      v-model="profile.tele"
+                      placeholder="Tele"
+                    />
+                  </div>
+                  <div class="col">
+                    <div class="float-right mt-4">
                       <vs-button
                         @click="AddAdmin"
                         icon="group_add"
@@ -177,7 +185,7 @@
                   <thead class="text-primary">
                     <th>Name</th>
                     <th>Email</th>
-                    <th>password</th>
+                    <th>Tele</th>
                     <th>Fonction</th>
                     <th>Status</th>
                     <th class="d-flex justify-content-center">Action</th>
@@ -186,7 +194,7 @@
                     <tr v-for="(item,key)  in admins.data" :key="key">
                       <td>{{ item.name }}</td>
                       <td>{{ item.email }}</td>
-                      <td>**********</td>
+                      <td>{{ item.tele }}</td>
                       <td class="text-primary">
                         <b>{{ item.fonctiontype }}</b>
                       </td>
@@ -232,13 +240,22 @@
     <vs-popup class="holamundo" title="Modifier" :active.sync="popupActivoEdit">
       <div>
         <div class="row mb-2">
-          <div class="col-lg-12 d-flex justify-content-center">
+          <div class="col-lg-6 col-sm-12">
             <vs-input
               class="input-name"
               icon="person_pin"
               label="Nom et Prenom"
               v-model="editprofil.name"
               placeholder="Name"
+            />
+          </div>
+          <div class="col-lg-6 col-sm-12">
+            <vs-input
+              class="input-name"
+              icon="phone"
+              label="Tele (212...)"
+              v-model="editprofil.tele"
+              placeholder="Tele"
             />
           </div>
         </div>
@@ -460,7 +477,8 @@ export default {
         name: "",
         email: "",
         password: "",
-        fonction: "Admin"
+        fonction: "Admin",
+        tele: ""
       },
       editprofil: {
         id: "",
@@ -468,7 +486,8 @@ export default {
         email: "",
         password: "",
         oldpassword: "",
-        fonction: ""
+        fonction: "",
+        tele: ""
       },
       admins: {},
       errors: {},
@@ -583,6 +602,8 @@ export default {
       this.editprofil.id = item.id;
       this.editprofil.name = item.name;
       this.editprofil.email = item.email;
+      this.editprofil.tele = item.tele;
+
       this.editprofil.fonction = item.fonctiontype;
     },
     UpdateAdmin() {
@@ -606,6 +627,8 @@ export default {
               text: "l'administrateur a été modifié",
               color: color
             });
+
+            this.popupActivoEdit = false;
           }
         })
         .catch(error => {

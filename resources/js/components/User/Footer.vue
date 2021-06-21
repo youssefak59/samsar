@@ -1,119 +1,109 @@
 <template>
   <div>
-    <footer class="section-footer border-top mt-5">
-      <div class="container">
-        <section class="footer-top padding-y">
-          <div class="row">
-            <aside class="col-md-4">
-              <article class="mr-3">
-                <!-- <img src="bootstrap-ecommerce-html/images/logo.png" class="logo-footer"> -->
-                <a class="navbar-brand link" href="/fr/maroc#/">YSF TEAM</a>
-                <p class="mt-2"></p>
-                <span>Appartements - Tout le Maroc</span>
-                <span>Maisons et Villas - Tout le Maroc</span>
-                <span>Bureaux et Plateaux - Tout le Maroc</span>
-                <span>Magasins, Commerces et Locaux industriels - Tout le Maroc</span>
-                <span>Terrains et Fermes - Tout le Maroc</span>
-                <span>Locations de vacances - Tout le Maroc</span>
-                <span>Colocations - Tout le Maroc</span>
-                <span>Autre Immobilier - Tout le Maroc</span>
-                <p class="mt-2"></p>
-                <div>
-                  <a class="btn btn-icon btn-light" title="Facebook" target="_blank" href="#">
-                    <i class="fab fa-facebook-f"></i>
-                  </a>
-                  <a class="btn btn-icon btn-light" title="Instagram" target="_blank" href="#">
-                    <i class="fab fa-instagram"></i>
-                  </a>
-                  <a class="btn btn-icon btn-light" title="Youtube" target="_blank" href="#">
-                    <i class="fab fa-youtube"></i>
-                  </a>
-                  <a class="btn btn-icon btn-light" title="Twitter" target="_blank" href="#">
-                    <i class="fab fa-twitter"></i>
-                  </a>
-                </div>
-              </article>
-            </aside>
-            <aside class="col-sm-3 col-md-2">
-              <h6 class="title">About</h6>
-              <ul class="list-unstyled">
-                <li>
-                  <a href="#">About us</a>
-                </li>
-                <li>
-                  <a href="#">Services</a>
-                </li>
-                <li>
-                  <a href="#">Rules and terms</a>
-                </li>
-                <li>
-                  <a href="#">Blogs</a>
-                </li>
-              </ul>
-            </aside>
-            <aside class="col-sm-3 col-md-2">
-              <h6 class="title">Services</h6>
-              <ul class="list-unstyled">
-                <li>
-                  <a href="#">Help center</a>
-                </li>
-                <li>
-                  <a href="#">Money refund</a>
-                </li>
-                <li>
-                  <a href="#">Terms and Policy</a>
-                </li>
-                <li>
-                  <a href="#">Open dispute</a>
-                </li>
-              </ul>
-            </aside>
-            <aside class="col-sm-3 col-md-2">
-              <h6 class="title">For users</h6>
-              <ul class="list-unstyled">
-                <li>
-                  <a href="#">User Login</a>
-                </li>
-                <li>
-                  <a href="#">User register</a>
-                </li>
-                <li>
-                  <a href="#">Account Setting</a>
-                </li>
-                <li>
-                  <a href="#">My Orders</a>
-                </li>
-                <li>
-                  <a href="#">My Wishlist</a>
-                </li>
-              </ul>
-            </aside>
-            <aside class="col-sm-2 col-md-2">
-              <h6 class="title">Our app</h6>
-              <a href="#" class="d-block mb-2">
-                <img src="bootstrap-ecommerce-html/images/misc/appstore.png" height="40">
-              </a>
-              <a href="#" class="d-block mb-2">
-                <img src="bootstrap-ecommerce-html/images/misc/playmarket.png" height="40">
-              </a>
-            </aside>
+    <footer class="bg-white mt-5 shadow-sm">
+      <div class="container py-5">
+        <div class="row py-4">
+          <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
+            <h2>team YSF</h2>
+            <!-- <img src="img/logo.png" alt width="180" class="mb-3"> -->
+            <p class="font-italic text-muted">
+              <span>Appartements - Tout le Maroc</span>
+              <span>Maisons et Villas - Tout le Maroc</span>
+              <span>Bureaux et Plateaux - Tout le Maroc</span>
+              <span>Magasins, Commerces et Locaux industriels - Tout le Maroc</span>
+              <span>Terrains et Fermes - Tout le Maroc</span>
+              <span>Locations de vacances - Tout le Maroc</span>
+              <span>Colocations - Tout le Maroc</span>
+              <span>Autre Immobilier - Tout le Maroc</span>
+            </p>
+            <ul class="list-inline mt-4">
+              <li class="list-inline-item">
+                <a href="#" target="_blank" title="twitter">
+                  <i class="fa fa-twitter"></i>
+                </a>
+              </li>
+              <li class="list-inline-item">
+                <a href="#" target="_blank" title="facebook">
+                  <i class="fa fa-facebook"></i>
+                </a>
+              </li>
+              <li class="list-inline-item">
+                <a href="#" target="_blank" title="instagram">
+                  <i class="fa fa-instagram"></i>
+                </a>
+              </li>
+              <li class="list-inline-item">
+                <a href="#" target="_blank" title="pinterest">
+                  <i class="fa fa-pinterest"></i>
+                </a>
+              </li>
+              <li class="list-inline-item">
+                <a href="#" target="_blank" title="vimeo">
+                  <i class="fa fa-vimeo"></i>
+                </a>
+              </li>
+            </ul>
           </div>
-          <!-- row.// -->
-        </section>
-        <!-- footer-top.// -->
+          <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
+            <h6 class="text-uppercase font-weight-bold mb-4">Contacts</h6>
+            <ul class="list-unstyled mb-0">
+              <li class="mb-2">
+                <b>Address:</b>
+                <p class="text-muted">798 South Park Avenue, New York, USA</p>
+              </li>
+              <li class="mb-2">
+                <b>Email:</b>
+                <p class="text-muted">Youssefakchar@gmail.com</p>
+              </li>
+              <li class="mb-2">
+                <b>Téle:</b>
+                <p class="text-muted">0674507844/065432864</p>
+              </li>
+            </ul>
+          </div>
 
-        <section class="footer-copyright border-top">
-          <p class="float-left text-muted">© 2021 Company All rights resetved Yousssef akchar</p>
-          <p target="_blank" class="float-right text-muted">
-            <a href="#">Privacy &amp; Cookies</a> &nbsp; &nbsp;
-            <a href="#">Accessibility</a>
-          </p>
-        </section>
+          <div class="col-lg-4 col-md-6 mb-lg-0">
+            <h6 class="text-uppercase font-weight-bold mb-4">Contact us</h6>
+
+            <ul class="list-unstyled mb-0">
+              <li class="mb-2">
+                <b>Contactez nous:</b>
+                <br>
+
+                <a @click="RedirectContactUS" class="text-muted">Envoyer un message</a>
+              </li>
+              <li class="mb-2">
+                <b>OU</b>
+              </li>
+              <li class="mb-2">
+                <b>Whatsapp:</b>
+                <br>
+                <a class="text-muted" href="https://wa.me/212674507844">&nbsp;Contactez nous</a>
+              </li>
+            </ul>
+          </div>
+        </div>
       </div>
-      <!-- //container -->
+
+      <!-- Copyrights -->
+      <div class="bg-light py-4">
+        <div class="container text-center">
+          <p class="text-muted mb-0 py-2">© 2021 All rights reserved Yousssef akchar</p>
+        </div>
+      </div>
     </footer>
+    <!-- End -->
   </div>
 </template>
 <script>
-export default {};
+export default {
+  data() {
+    return {};
+  },
+  methods: {
+    RedirectContactUS() {
+      window.location = "/messages/form";
+    }
+  }
+};
 </script>

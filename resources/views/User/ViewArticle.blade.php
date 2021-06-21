@@ -5,7 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>View Article</title>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-165VQ2M8FT"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
 
+  gtag('config', 'G-165VQ2M8FT');
+</script>
 <script src="https://kit.fontawesome.com/47e2cff383.js" crossorigin="anonymous"></script>
 <link href="/css/bootstrap.css" rel="stylesheet" type="text/css"/>
 

@@ -124,7 +124,7 @@
         <b>Aucun</b> Resultat
       </span>
     </vs-alert>
-    <div class="centerx example-loading" v-if="annonces['countannonce']!=0">
+    <div class="centerx example-loading" v-if="annonces['total']!=0">
       <div class="fill-row-loading">
         <div
           :class="{'activeLoading':activeLoading}"
@@ -133,15 +133,15 @@
         >
           <div class="row">
             <div class="col-lg-8">
-              <vs-row class="mb-3">
+              <vs-row class>
                 <vs-col type="flex" vs-justify="right" vs-align="right" vs-lg="12">
                   <div class="card sticky-top">
                     <div class="card-body p-2">
                       <div class="card-titl d-flex justify-content-center float-left">
                         <span>
                           &nbsp;
-                          <!-- {{ annonces.data[0].Type_bien }} à {{ annonces.data[0].ville }} -->
-                          (19131 annonces)
+                          <!-- {{ annonces.Type_bien }} à {{ annonces.ville }} -->
+                          {{ typeCount }} annonces
                         </span>
                       </div>
                     </div>
@@ -220,7 +220,7 @@
               </vs-row>
             </div>
             <div class="col-lg-4">
-              <vs-row class="mb-3">
+              <vs-row class>
                 <vs-col type="flex" vs-justify="right" vs-align="right" vs-lg="12">
                   <!-- card.// -->
                   <div class="card sticky-top">
@@ -407,7 +407,8 @@ export default {
       invalid: false,
       region: [],
       ville: [],
-      typeCount: [],
+      typeCount: 0,
+      infoLocation: [],
       activeLoading: false,
       popupActivo: false,
       countpremium: 0,
@@ -498,19 +499,13 @@ export default {
         .then(response => {
           if (response.data["status"] == "suscuss") {
             this.countannonce = response.data["countannonce"];
-
-            // console.log(this.annonces["current_page"]);
-
-            // console.log(this.annonces["data"]);
             if (this.countannonce == 0) {
               this.activeLoading = true;
               this.$vs.loading({
                 type: "default"
               });
             }
-
             this.annonces = response.data["annones"];
-
             this.annoncesPremium = response.data["annoncespremium"];
             this.countpremium = response.data["countpremium"];
 
@@ -528,7 +523,7 @@ export default {
     },
     CountType() {
       axios.get("/api/counttype").then(response => {
-        this.typeCount = response.data;
+        this.typeCount = response.data["countannonce"];
         // console.log(this.typeCount["countApp"]);
       });
     },

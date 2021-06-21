@@ -11,8 +11,19 @@ Route::get('/login', function () {
     return view('Admin.loginAdmin');
 })->name('login');
 Route::post('/loginadmin', [AuthController::class, 'Login']);
-Route::post('/logout', [AuthController::class, 'Logout']);
 
+Route::post('/logout', [AuthController::class, 'Logout']);
+Route::get('/messages/form', function () {
+    return view('User.ContactUs');
+});
+
+ Route::post('/messages/premium', [AnnonceController::class, 'SendMsgPremium']);
+ Route::get('/message/premium/view', [AnnonceController::class, 'MsgPremium']);
+ Route::put('/putdonepremium/{id}', [AnnonceController::class, 'PutdonePremium']);
+
+
+
+Route::delete('/deleteannonce/{id}',[AnnonceController::class, 'DeleteAnnonceNormal']);
 
 
 // Route::middleware([CheckLogin::class])->group(function(){
@@ -25,12 +36,8 @@ Route::post('/logout', [AuthController::class, 'Logout']);
  Route::get('/dash', [IndexController::class, 'dash'])->name('dashboard')->middleware('admin');
   Route::get('/fr/maroc', [IndexController::class, 'GetApp']);
   Route::get("/view/{id}",[IndexController::class,"getViewArticle"]);
-//   Route::get("/view/{id}",[AnnonceController::class,"getArticle"]);
-
-// Route::get('/is-auth', function () {
-//     $auth = Auth::user();
-//     return $auth;
-// });
 
 
-// Route::post('/loginadmin', [AuthController::class, 'Login']);
+   Route::get('/gettele', [AnnonceController::class, 'GetTele']);
+
+

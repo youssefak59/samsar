@@ -32,10 +32,7 @@ Vue.component(
     "profile-admin",
     require("./components/Admin/ProfileAdmin.vue").default
 );
-// Vue.component(
-//     "profile-admin",
-//     require("./components/Admin/Profile.vue").default
-// );
+Vue.component("contact-me", require("./components/User/contactMe.vue").default);
 
 Vue.component("pagination", require("laravel-vue-pagination"));
 
@@ -45,7 +42,8 @@ import VuePageTransition from "vue-page-transition";
 
 Vue.use(VuePageTransition);
 
-//
+//refresh scrool
+
 //validate
 import Vuelidate from "vuelidate";
 Vue.use(Vuelidate);

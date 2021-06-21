@@ -60,13 +60,13 @@
                 <div class="carousel-inner">
                   <div class="carousel-item active">
                     <img
-                      class="d-block img-view w-100"
+                      class="d-block img-view center"
                       :src="'/storage/'+images[0].path"
                       alt="First slide"
                     >
                   </div>
                   <div class="carousel-item" v-for="(item,index) in images" :key="index">
-                    <img class="d-block img-view w-100" :src="'/storage/'+item.path">
+                    <img class="d-block img-view center" :src="'/storage/'+item.path">
                   </div>
                 </div>
                 <a
@@ -199,10 +199,7 @@
                     <div class="mt-3">
                       <i class="fas fa-globe"></i>
                       <span>
-                        <a
-                          href="http://vip-services.ma"
-                          class="text-pink"
-                        >&nbsp;http://vip-services.ma</a>
+                        <a href="http://samsar.ma" class="text-pink">&nbsp;http://ecom-location.ma</a>
                       </span>
                     </div>
                     <div class="mt-3">
@@ -480,6 +477,11 @@
   </div>
 </template>
 <style>
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
 .lbl {
   background-color: #fdba04;
   padding: 1px;

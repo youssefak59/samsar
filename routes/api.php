@@ -12,10 +12,13 @@ Route::post('/posting/annonce', [AnnonceController::class, 'CreateAnnonce']);
 
 
 
-Route::get('/getregion',[AnnonceController::class, 'GetRegion']);
-Route::get('/getville/{id}',[AnnonceController::class, 'GetVille']);
 Route::get('/getannonce',[AnnonceController::class, 'GetAnnonce']);
 Route::get('/maroc',[AnnonceController::class, 'GetAnnonceA']);
+
+Route::get('/getregion',[AnnonceController::class, 'GetRegion']);
+Route::get('/getville/{id}',[AnnonceController::class, 'GetVille']);
+
+
 Route::get('/getelement',[AnnonceController::class, 'gettest']);
 Route::get('/getarticleview/{id}',[AnnonceController::class, 'GetArticleView']);
 Route::post('/sendmsg/{id}',[AnnonceController::class, 'SendMsg']);
@@ -29,7 +32,7 @@ Route::put('/putdone/{id}',[AnnonceController::class, 'PutDone']);
 Route::get('/getcountinfo',[AnnonceController::class, 'getCountInfo']);
 Route::get('/allannonce',[AnnonceController::class, 'GetAllFunction']);
 Route::get('/getannoncebyid/{id}',[AnnonceController::class, 'getannoncebyidInput']);
-Route::delete('/deleteannonce/{id}',[AnnonceController::class, 'DeleteAnnonceNormal']);
+
 Route::post('/addadmin',[AnnonceController::class, 'AddAdmin']);
 Route::get('/getadmins',[AnnonceController::class, 'GetAdmins']);
 Route::delete('/deleteadmin/{id}',[AnnonceController::class, 'DeleteAdmin']);

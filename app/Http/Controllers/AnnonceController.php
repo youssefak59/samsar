@@ -9,6 +9,7 @@ use App\Models\Ville;
 use App\Models\Image;
 use App\Models\Message;
 use App\Models\User;
+use App\Models\Premium;
 use Illuminate\Support\Facades\Auth;
 
 use Illuminate\Support\Facades\DB;
@@ -217,6 +218,7 @@ class AnnonceController extends Controller
         $messages=DB::table("messages")
                          ->orderBy('messages.created_at', 'DESC')
                         ->get();   
+                        
         if ($messages) {
            return response()->json(["status"=>"sucssus","messages"=>$messages]);
         }return response()->json(["status"=>"error"]);
@@ -238,15 +240,15 @@ class AnnonceController extends Controller
     }
     public function GetCountType(){
   
-        $countApp=Annonce::where("Type_bien","Appartements")->count();
-        $countMais=Annonce::where("Type_bien","Maisons")->count();
-        $countVillas=Annonce::where("Type_bien","Villas & maisons de luxe")->count();
-        $countRiad=Annonce::where("Type_bien","Riad")->count();
-        $countlocaux=Annonce::where("Type_bien","Locaux commerciaux")->count();
-        $countbreua=Annonce::where("Type_bien","Bureaux")->count();
-        $countTerrains=Annonce::where("Type_bien","Terrains")->count();
-        $countFermes=Annonce::where("Type_bien","Fermes")->count();
-        return response()->json(["countApp"=>$countApp,"countMais"=>$countMais,"countVillas"=>$countVillas,"countRiad"=>$countRiad,"countlocaux"=>$countlocaux,"countbreua"=>$countbreua,"countTerrains"=>$countTerrains,"countFermes"=>$countFermes]);
+        $countannonce=DB::table("annonces")->count();
+        // $countMais=Annonce::where("Type_bien","Maisons")->count();
+        // $countVillas=Annonce::where("Type_bien","Villas & maisons de luxe")->count();
+        // $countRiad=Annonce::where("Type_bien","Riad")->count();
+        // $countlocaux=Annonce::where("Type_bien","Locaux commerciaux")->count();
+        // $countbreua=Annonce::where("Type_bien","Bureaux")->count();
+        // $countTerrains=Annonce::where("Type_bien","Terrains")->count();
+        // $countFermes=Annonce::where("Type_bien","Fermes")->count();
+        return response()->json(["countannonce"=>$countannonce]);
 
     }
     public function GetAnnoncePremium(){
@@ -336,6 +338,10 @@ class AnnonceController extends Controller
         
     }
     public function DeleteAnnonceNormal($id){
+            $checkmessages=Message::where("id_annonce","=",$id)->get();
+            if ($checkmessages) {
+               Message::where("id_annonce","=",$id)->delete();
+            }
             $AnnonceById=DB::table('images')->where("id_annonce",$id)->delete();
             if ($AnnonceById) {
                 $AnnonceById2=DB::table('annonces')->where("id",$id)->delete();
@@ -361,6 +367,8 @@ class AnnonceController extends Controller
         $user->email=$request->email;
         $user->password=\Hash::make($request->password);
         $user->fonctiontype=$request->fonction; 
+        $user->tele=$request->tele; 
+
         if($user->save())  return response()->json(["stats"=>"succsus"]);
             return response()->json(["status"=>"error"]);
         
@@ -379,8 +387,6 @@ class AnnonceController extends Controller
 
      }
      public function UpdateAdmin($id,Request $request){
-        
-
         //  return $request;
             $request->validate([
                 'name' =>'required',
@@ -399,7 +405,9 @@ class AnnonceController extends Controller
                             "name"=>$request->name,
                             "email"=>$request->email,
                             "password"=>\Hash::make($request->password),
-                            "fonctiontype"=>$request->fonction
+                            "fonctiontype"=>$request->fonction,
+                            "tele"=>$request->tele,
+
                         ]);
                         return response()->json(["status"=>"success",]);
 
@@ -410,9 +418,7 @@ class AnnonceController extends Controller
      public function UpdateProfile(Request $request){
         //  return $request;
         $request->validate([
-                'image' =>'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-                
-                
+                'image' =>'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',  
             ]);
          if (Auth::check()) {
            $Changeimage=User::find(Auth::user()->id);
@@ -433,6 +439,55 @@ class AnnonceController extends Controller
          $InfoAdmin=User::find(Auth::user()->id);
          return response()->json(["status"=>"success","infoadminauth"=>$InfoAdmin]);
      }
+     public function SendMsgPremium(Request $request){
+        $request->validate([
+            'name' =>'required',
+            'email'     =>'required|email',
+            'tele'       =>'required',
+            'msg'       =>'required', 
+        ]);
+
+        $msg=new Premium();
+        $msg->name=$request->name;
+        $msg->email=$request->email;
+        $msg->tele=$request->tele;
+        $msg->msg=$request->msg;
+        if ($msg->save()) {
+            return response()->json(["status"=>"success"]);
+        }
+        else {
+           return response()->json(["status"=>"error","error"=>$errors]);
+        }
+     }
+     public function MsgPremium(){
+         $msgPremium=Premium::all();
+         return response()->json(["status"=>"success","msgpremium"=>$msgPremium]);
+     }
+    public function PutdonePremium($id){
+        $updateDone=DB::table("premiums")
+                            ->where("premiums.id",$id)
+                            ->UPDATE(["premiums.done"=>1]);
+            $msgUpdate=DB::table("premiums")
+                            ->orderBy('premiums.created_at','DESC')
+                            ->get();                
+                            if ($updateDone) {
+                                return response()->json(["status"=>"succsus","msgUpdate"=>$msgUpdate]);
+                            }
+                            else return response()->json(["status"=>"error"]);
+
+    }
+    public function GetTele(){
+        $admin=DB::table("users")
+                    ->select('tele')
+                    ->where("fonctiontype","Super admin")
+                    ->get();
+                return response()->json(["status"=>"success","info"=>$admin]);
+    }
+
+    public function CountAnnonce(){
+        return response()->json(["countannonce"=>Annonce::count()]);
+    }
+
 
 
 
