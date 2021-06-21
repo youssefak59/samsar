@@ -498,7 +498,7 @@ export default {
   methods: {
     AddAdmin() {
       axios
-        .post("/api/addadmin", this.profile)
+        .post("/addadmin", this.profile)
         .then(response => {
           if (response.data["stats"] == "succsus") {
             let color = `success`;
@@ -532,7 +532,7 @@ export default {
     },
     GetAdmin(page = 1) {
       axios
-        .get("/api/getadmins?page=" + page)
+        .get("/getadmins?page=" + page)
         .then(response => {
           if (response.data["status"] == "succsus") {
             this.admins = response.data["admins"];
@@ -570,7 +570,7 @@ export default {
         .then(result => {
           if (result.isConfirmed) {
             axios
-              .delete("/api/deleteadmin/" + item.id)
+              .delete("/deleteadmin/" + item.id)
               .then(response => {
                 if (response.data["status"] == "success") {
                   let color = `success`;
@@ -608,7 +608,7 @@ export default {
     },
     UpdateAdmin() {
       axios
-        .put("/api/updateadmin/" + this.editprofil.id, this.editprofil)
+        .put("/updateadmin/" + this.editprofil.id, this.editprofil)
         .then(response => {
           if (response.data["status"] == "error") {
             let color = `danger`;

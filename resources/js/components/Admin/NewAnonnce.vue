@@ -959,7 +959,7 @@ export default {
       const config = { headers: { "Content-Type": "multipart/form-data" } };
       document.getElementById("myIdUpload").value = [];
       axios
-        .post("/api/posting/annonce", this.form, config)
+        .post("/posting/annonce", this.form, config)
         .then(response => {
           if (response.data["status"] == "success") {
             Swal.fire({

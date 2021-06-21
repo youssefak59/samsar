@@ -117,7 +117,7 @@ export default {
     },
     ViewAnnonce(page = 1) {
       if (this.Id_recherche == "") {
-        axios.get("/api/allannonce?page=" + page).then(response => {
+        axios.get("/allannonce?page=" + page).then(response => {
           if (response.data["status"] == "sucssus") {
             this.annonces = {};
             this.annonces = response.data["allannonce"];
@@ -125,7 +125,7 @@ export default {
         });
       } else {
         axios
-          .get("/api/getannoncebyid/" + this.Id_recherche)
+          .get("/getannoncebyid/" + this.Id_recherche)
           .then(response => {
             if (response.data["sttaus"] == "succsus") {
               this.annonces = {};

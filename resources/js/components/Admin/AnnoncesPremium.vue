@@ -152,7 +152,7 @@ export default {
 
   methods: {
     GetAnnoncePremium(page = 1) {
-      axios.get("/api/annoncepremium?page=" + page).then(response => {
+      axios.get("/annoncepremium?page=" + page).then(response => {
         if (response.data["status"] == "succsus") {
           this.annoncePremium = response.data["annoncepremium"];
           this.countPremium = response.data["countPremium"];
@@ -165,7 +165,7 @@ export default {
     },
     ActiverAnnonce(bollswitch, id_annonce) {
       axios
-        .put("/api/activeannonce", {
+        .put("/activeannonce", {
           switch: !bollswitch,
           id: id_annonce
         })

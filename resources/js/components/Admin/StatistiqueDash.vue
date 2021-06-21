@@ -326,7 +326,7 @@ export default {
   methods: {
     GetMsg() {
       axios
-        .get("/api/getmsgs")
+        .get("/getmsgs")
         .then(response => {
           if (response.data["status"] == "sucssus") {
             this.messages = response.data["messages"];
@@ -341,7 +341,7 @@ export default {
       this.InfoMsg = item;
       // alert(item.id);
       axios
-        .get("/api/getannonce/" + item.id_annonce)
+        .get("/getannonce/" + item.id_annonce)
         .then(response => {
           if (response.data["status"] == "succsus") {
             this.annonceById = response.data["annonceById"];
@@ -353,7 +353,7 @@ export default {
     },
     Done(item) {
       axios
-        .put("/api/putdone/" + item.id)
+        .put("/putdone/" + item.id)
         .then(response => {
           if (response.data["status"] == "succsus") {
             this.messages = {};
@@ -403,7 +403,7 @@ export default {
     },
     CountInfo() {
       axios
-        .get("/api/getcountinfo")
+        .get("/getcountinfo")
         .then(response => {
           this.countInfo = response.data["CountInfo"];
         })
