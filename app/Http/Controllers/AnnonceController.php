@@ -460,7 +460,10 @@ class AnnonceController extends Controller
         }
      }
      public function MsgPremium(){
-         $msgPremium=Premium::all();
+        //  $msgPremium=Premium::all();
+         $msgPremium=DB::table("premiums")
+                    ->orderBy('created_at', 'DESC')
+                    ->get();
          return response()->json(["status"=>"success","msgpremium"=>$msgPremium]);
      }
     public function PutdonePremium($id){

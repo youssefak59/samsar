@@ -22,7 +22,7 @@ Route::post('/sendmsg/{id}',[AnnonceController::class, 'SendMsg']);
 Route::get('/suggestion',[AnnonceController::class, 'GetSuggestion']);
 Route::get('/counttype',[AnnonceController::class, 'GetCountType']);
 Route::put('/activeannonce',[AnnonceController::class, 'activeannonce']);
-Route::get('/annoncepremium',[AnnonceController::class, 'GetAnnoncePremium']);
+
 
 
 

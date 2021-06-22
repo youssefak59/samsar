@@ -103,7 +103,7 @@ export default {
   },
   methods: {
     GetAnnonceNormal(page = 1) {
-      axios.get("/api/allannonce?page=" + page).then(response => {
+      axios.get("/allannonce?page=" + page).then(response => {
         if (response.data["status"] == "sucssus") {
           this.annonces = response.data["allannonce"];
         }

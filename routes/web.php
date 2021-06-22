@@ -39,6 +39,7 @@ Route::middleware(['admin'])->group(function () {
     Route::delete('/deleteadmin/{id}',[AnnonceController::class, 'DeleteAdmin']);
     Route::put('/updateadmin/{id}',[AnnonceController::class, 'UpdateAdmin']);
     Route::post('/posting/annonce', [AnnonceController::class, 'CreateAnnonce']);
+    Route::get('/annoncepremium',[AnnonceController::class, 'GetAnnoncePremium']);
 });
     
 
